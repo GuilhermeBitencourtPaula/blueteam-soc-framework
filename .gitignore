@@ -1,0 +1,18 @@
+# Ignorar arquivos temporários do Python
+__pycache__/
+*.pyc
+
+# Ignorar o banco de dados simulado
+*.db
+sistema_secreto.db
+
+# Ignorar a pasta de relatórios (Logs forenses, Honeypot, OSINT)
+# Isso impede que dados confidenciais vazem para o GitHub
+relatorios/
+alertas_intrusao.txt
+relatorio_*.txt
+*.csv
+
+# Ignorar arquivos de sistema do Windows
+Thumbs.db
+desktop.ini
