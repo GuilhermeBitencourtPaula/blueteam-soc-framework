@@ -13,19 +13,14 @@ janela.geometry("750x700")
 janela.title("///  TERMINAL CRIPTOGRÁFICO  ///")
 janela.configure(fg_color="#000000")
 
-# ==========================================
-# MOTOR DE ANIMAÇÃO DA MATRIX (CHUVA DIGITAL)
-# ==========================================
 canvas_matrix = tk.Canvas(janela, bg='black', highlightthickness=0)
 canvas_matrix.place(x=0, y=0, relwidth=1, relheight=1)
 
 caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*!"
 tamanho_fonte = 16
-# Pegamos uma largura gigante caso você maximize a janela (ex: 3000px)
 colunas = 3000 // tamanho_fonte 
 num_gotas = 200 # Muito mais gotas simultâneas para dar volume e fluxo!
 
-# Cada gota tem sua própria posição X (coluna), Y (altura) e Velocidade
 gotas_x = [random.randint(0, colunas) * tamanho_fonte for _ in range(num_gotas)]
 gotas_y = [random.randint(-1500, 800) for _ in range(num_gotas)]
 velocidades = [random.randint(15, 30) for _ in range(num_gotas)]
@@ -34,36 +29,28 @@ def chover_matrix():
     canvas_matrix.delete("all")
     altura_tela = janela.winfo_height()
     if altura_tela < 100: altura_tela = 1080
-    
+
     for i in range(num_gotas):
         x = gotas_x[i]
         y = gotas_y[i]
         vel = velocidades[i]
-        
-        # Rastro mais longo e denso (4 letras escuras atrás da cabeça)
+
         for r in range(1, 5):
             canvas_matrix.create_text(x, y - (r * tamanho_fonte), text=random.choice(caracteres), fill="#003300", font=("Consolas", tamanho_fonte))
-            
-        # Cabeça neon brilhante da gota
+
         canvas_matrix.create_text(x, y, text=random.choice(caracteres), fill="#00FF00", font=("Consolas", tamanho_fonte, "bold"))
-        
-        # A gota cai na sua velocidade específica (efeito de profundidade)
+
         gotas_y[i] += vel
-        
-        # Se saiu da tela, reseta no topo em uma nova coluna aleatória
+
         if gotas_y[i] > altura_tela:
             gotas_y[i] = random.randint(-500, 0)
             gotas_x[i] = random.randint(0, colunas) * tamanho_fonte
             velocidades[i] = random.randint(15, 30)
-            
+
     janela.after(50, chover_matrix)
 
 janela.after(500, chover_matrix)
 
-
-# ==========================================
-# CONSTANTES DE ESTILO E FUNÇÕES LÓGICAS
-# ==========================================
 fonte_hacker = ("Consolas", 14, "bold")
 fonte_pequena = ("Consolas", 11)
 cor_neon = "#00FF00"
@@ -132,17 +119,11 @@ def limpar_tela():
     saida_terminal.insert("0.0", "> TERMINAL LIMPO. AGUARDANDO COMANDOS...\n")
     limpar_entradas()
 
-# ==========================================
-# HEADER PROFISSIONAL
-# ==========================================
 titulo = ctk.CTkLabel(janela, text="SYS.ENCRYPT // ROOT_ACCESS", font=("Consolas", 22, "bold"), text_color=cor_neon)
 titulo.pack(pady=(20, 0))
 subtitulo = ctk.CTkLabel(janela, text="Desenvolvido por Guilherme Bitencourt - Blue Team Security Tool", font=fonte_pequena, text_color="gray")
 subtitulo.pack(pady=(0, 20))
 
-# ==========================================
-# MÓDULO 1: TEXTO E CHAVES
-# ==========================================
 frame_texto = ctk.CTkFrame(janela, fg_color="#111111", border_color=cor_neon, border_width=1)
 frame_texto.pack(pady=10, padx=20, fill="x")
 
@@ -156,7 +137,6 @@ label_chave.pack(pady=(10, 0), padx=20, anchor="w")
 entrada_chave = ctk.CTkEntry(frame_texto, font=fonte_hacker, text_color=cor_neon, fg_color="black", border_color=cor_neon)
 entrada_chave.pack(pady=(0, 15), padx=20, fill="x")
 
-# Agrupando os botões lado a lado
 frame_botoes = ctk.CTkFrame(frame_texto, fg_color="transparent")
 frame_botoes.pack(pady=(0, 15))
 
@@ -169,9 +149,6 @@ botao_cripto.pack(side="left", padx=10)
 botao_descripto = ctk.CTkButton(frame_botoes, text="DESCRIPTOGRAFAR TEXTO", command=acao_descriptografar, font=fonte_hacker, text_color="black", fg_color=cor_neon, hover_color="#00CC00", width=200)
 botao_descripto.pack(side="left", padx=10)
 
-# ==========================================
-# MÓDULO 2: ARQUIVOS
-# ==========================================
 frame_arquivo = ctk.CTkFrame(janela, fg_color="#111111", border_color="#FF0000", border_width=1)
 frame_arquivo.pack(pady=10, padx=20, fill="x")
 
@@ -181,9 +158,6 @@ label_arq.pack(pady=(10, 5))
 botao_arquivo = ctk.CTkButton(frame_arquivo, text=" SELECIONAR E CRIPTOGRAFAR ARQUIVO ", command=criptografar_arquivo, font=fonte_hacker, text_color="black", fg_color="#FF0000", hover_color="#CC0000")
 botao_arquivo.pack(pady=(5, 15))
 
-# ==========================================
-# MÓDULO 3: TERMINAL DE LOGS
-# ==========================================
 frame_terminal = ctk.CTkFrame(janela, fg_color="transparent")
 frame_terminal.pack(pady=10, padx=20, fill="both", expand=True)
 

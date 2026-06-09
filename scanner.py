@@ -2,7 +2,6 @@ import socket
 import sys
 import concurrent.futures
 
-# Mapeamento de portas conhecidas
 portas_conhecidas = {
     20: "FTP (Dados)",
     21: "FTP (Controle) - Risco de Vazamento de Arquivos",
@@ -19,13 +18,13 @@ portas_conhecidas = {
 def scan_porta(ip, porta):
     telefone = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     telefone.settimeout(0.5) 
-    
+
     resposta = telefone.connect_ex((ip, porta))
-    
+
     if resposta == 0:
         servico = portas_conhecidas.get(porta, "Serviço Desconhecido")
         print(f"[!] ALERTA: Porta {porta} ABERTA | Serviço: {servico}")
-        
+
     telefone.close()
 
 print("/// INICIANDO VARREDURA DE PORTAS (MODO TURBO) ///")
@@ -34,16 +33,15 @@ if len(sys.argv) > 1:
     alvo = sys.argv[1]
 else:
     alvo = "127.0.0.1"
-    
+
 print(f"Alvo: {alvo}")
 print("Escaneando portas de 20 a 1024 simultaneamente...")
 
-# Motor de varredura multithread
 try:
     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
         for porta in range(20, 1025):
             executor.submit(scan_porta, meu_ip, porta)
-            
+
 except KeyboardInterrupt:
     print("\n[!] Varredura cancelada pelo usuário.")
     sys.exit()

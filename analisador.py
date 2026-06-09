@@ -39,7 +39,6 @@ else:
     pais = "País Desconhecido (IP de Teste/Privado)"
     cidade = "Desconhecida"
 
-
 print("--- RELATÓRIO DE SEGURANÇA (SOC) ---")
 print(f"ALERTA: O IP {top_ip} é a maior ameaça com {max_tentativas} tentativas de invasão.")
 print(f"INTELIGÊNCIA: O atacante está operando a partir de: {cidade}, {pais}")
