@@ -2,7 +2,7 @@ import socket
 import sys
 import concurrent.futures
 
-# Desafio 3: Nosso mini banco de dados de inteligência (Dicionário)
+# Mapeamento de portas conhecidas
 portas_conhecidas = {
     20: "FTP (Dados)",
     21: "FTP (Controle) - Risco de Vazamento de Arquivos",
@@ -30,7 +30,6 @@ def scan_porta(ip, porta):
 
 print("/// INICIANDO VARREDURA DE PORTAS (MODO TURBO) ///")
 
-# Lê o IP do terminal se for passado pelo Painel SOC
 if len(sys.argv) > 1:
     alvo = sys.argv[1]
 else:
@@ -39,12 +38,10 @@ else:
 print(f"Alvo: {alvo}")
 print("Escaneando portas de 20 a 1024 simultaneamente...")
 
-# Desafio 4: O Motor de Varredura Multithread (Turbo)
-# Criamos uma "piscina" de 100 trabalhadores trabalhando ao mesmo tempo
+# Motor de varredura multithread
 try:
     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
         for porta in range(20, 1025):
-            # Manda um trabalhador livre ir testar a porta
             executor.submit(scan_porta, meu_ip, porta)
             
 except KeyboardInterrupt:
